@@ -6,22 +6,22 @@ import Footer from '@/components/Footer';
 export const metadata: Metadata = {
   metadataBase: new URL('https://countwise.app'),
   title: {
-    default: 'CountWise - 在线字数与字符统计工具箱 (Free Character & Word Counter)',
+    default: 'CountWise - Free Online Character & Word Counter Suite',
     template: '%s | CountWise'
   },
-  description: '免费、实时、隐私安全的在线字数与字符统计工具。支持汉字、单词、空格、段落统计，并提供 LinkedIn、Twitter、SEO 搜索卡片场景化长度预览。',
-  keywords: ['字数统计', '字符数统计', '在线字数计算器', 'character counter', 'word counter', 'linkedin post length', 'twitter thread splitter'],
-  authors: [{ name: 'CountWise' }],
+  description: 'Instant, private online character counter and word counter tool. Measure characters, words, sentences, paragraphs, and reading time with live platform length previews.',
+  keywords: ['character counter', 'word counter', 'online text counter', 'linkedin character count', 'twitter thread splitter', 'seo meta length checker'],
+  authors: [{ name: 'CountWise Suite' }],
   robots: {
     index: true,
     follow: true,
   },
   openGraph: {
     type: 'website',
-    locale: 'zh_CN',
+    locale: 'en_US',
     url: 'https://countwise.app',
-    title: 'CountWise - 在线字数与字符统计工具箱',
-    description: '100% 纯前端处理，隐私安全。一键统计字数、字符数、行数、阅读时长。',
+    title: 'CountWise - Character & Word Counter Suite',
+    description: '100% client-side privacy-first text counter tool.',
     siteName: 'CountWise'
   }
 };
@@ -32,11 +32,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="zh-CN" className="dark">
-      <body className="bg-[#0D1117] text-[#F0F6FC] flex flex-col min-h-screen">
+    <html lang="en">
+      <body className="bg-[#F8FAFC] text-slate-900 flex flex-col min-h-screen">
         <Header />
         <main className="flex-1">
-          <div className="page-container">
+          <div className="portal-container">
             {children}
           </div>
         </main>

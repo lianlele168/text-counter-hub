@@ -2,185 +2,149 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { ShoppingBag, Copy, Check, Trash2, ArrowLeft, ShieldAlert, CheckCircle2 } from 'lucide-react';
+import { ShoppingBag, Copy, Check, Trash2, ArrowLeft, AlertTriangle } from 'lucide-react';
 import SchemaMarkup from '@/components/SchemaMarkup';
 
 export default function AmazonCounterPage() {
   const [title, setTitle] = useState('');
-  const [bullet1, setBullet1] = useState('');
-  const [bullet2, setBullet2] = useState('');
+  const [bullet, setBullet] = useState('');
   const [copied, setCopied] = useState(false);
 
   const titleLen = title.length;
-  const titleMax = 200;
-  const titleRecommended = 75; // Amazon 2026 search index recommendation
+  const bulletLen = bullet.length;
 
-  const b1Len = bullet1.length;
-  const b2Len = bullet2.length;
-  const bulletMax = 200;
+  const titleLimitMobile = 75;
+  const titleLimitMax = 200;
+  const bulletLimitMax = 500;
 
-  // Flag promotional words forbidden by Amazon guidelines
-  const forbiddenWords = ['best', 'free', 'cheap', '#1', 'top rated', 'guaranteed', 'discount'];
-  const titleForbidden = forbiddenWords.filter((w) => title.toLowerCase().includes(w));
-
-  const loadSample = () => {
-    setTitle('Ergonomic Wireless Vertical Mouse - 2.4G Rechargeable Optical Computer Mouse with 3 Adjustable DPI');
-    setBullet1('ERGONOMIC HEALTHY DESIGN: Encourages neutral wrist & arm positions for smoother movement and less overall strain.');
-    setBullet2('AUTO-SLEEP POWER SAVING: Enters sleep mode after 8 minutes of inactivity to conserve battery life.');
-  };
+  // Prohibited Seller Claim Words
+  const restrictedWords = ['best seller', 'free shipping', 'guaranteed', '100% quality', '#1', 'cheap', 'discount'];
+  const foundWords = restrictedWords.filter(w => 
+    title.toLowerCase().includes(w) || bullet.toLowerCase().includes(w)
+  );
 
   const handleCopy = () => {
-    const formatted = `PRODUCT TITLE:\n${title}\n\nBULLET 1:\n${bullet1}\n\nBULLET 2:\n${bullet2}`;
-    navigator.clipboard.writeText(formatted);
+    const text = `TITLE:\n${title}\n\nBULLET POINT:\n${bullet}`;
+    navigator.clipboard.writeText(text);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
+  };
+
+  const loadSample = () => {
+    setTitle('Ergonomic Memory Foam Office Seat Cushion for Back Pain Relief');
+    setBullet('PREMIUM DENSITY MEMORY FOAM: Crafted with 100% pure memory foam with zero additive fillers to support your lower lumbar spine and posture.');
   };
 
   return (
     <>
       <SchemaMarkup
-        name="Amazon Product Listing Character Counter & Guidelines Checker"
-        description="Free online character counter tool for Amazon FBA sellers to verify product title length (75-200 chars), bullet point guidelines, and forbidden promo words."
+        name="Amazon Seller Listing Character Counter & Inspector"
+        description="Free online Amazon product listing length tool. Verify title length limits (75 mobile / 200 max) and scan for prohibited promotional words."
         url="https://countwise.app/amazon-listing-character-counter"
       />
 
-      <div className="space-y-8 max-w-4xl mx-auto">
-        {/* Back Link */}
-        <Link href="/" className="inline-flex items-center gap-1.5 text-xs text-gray-400 hover:text-white transition-colors">
-          <ArrowLeft className="w-3.5 h-3.5" /> Back to All-in-One Counter
+      <div className="space-y-8">
+        <Link href="/" className="inline-flex items-center gap-1.5 text-xs text-slate-500 hover:text-indigo-600 font-semibold transition-colors">
+          <ArrowLeft className="w-3.5 h-3.5" /> Back to All Counter Workspace
         </Link>
 
-        {/* Header */}
-        <div className="space-y-3">
+        {/* Title */}
+        <div className="space-y-2">
           <div className="flex items-center gap-2">
-            <div className="w-9 h-9 rounded-xl bg-amber-600 flex items-center justify-center text-white shadow-lg shadow-amber-500/25">
-              <ShoppingBag className="w-5 h-5" />
+            <div className="w-8 h-8 rounded-lg bg-amber-50 border border-amber-200 flex items-center justify-center text-amber-600 font-bold">
+              <ShoppingBag className="w-4 h-4" />
             </div>
-            <span className="badge">Amazon Seller Tool</span>
+            <span className="bg-amber-100 text-amber-800 text-xs font-bold px-2.5 py-0.5 rounded-full">Amazon Seller</span>
           </div>
-          <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight">
-            Amazon Product Listing <span className="text-amber-400">Character Counter</span>
+          <h1>
+            Amazon Seller Listing Character Inspector
           </h1>
-          <p className="text-gray-400 text-sm md:text-base leading-relaxed">
-            Amazon search indexing prioritizes titles under 75-150 characters (max 200) and bullet points under 200 characters each. Ensure compliance to avoid suppression.
+          <p className="text-slate-600 text-sm max-w-2xl font-medium">
+            Keep product titles under 75 characters for mobile optimization (200 max) and bullet points under 500 characters while flagging restricted policy terms.
           </p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {/* Left Inputs */}
-          <div className="glass-panel p-5 space-y-4 text-xs">
-            <div className="flex items-center justify-between">
-              <span className="font-semibold text-white">Listing Fields Editor</span>
-              <div className="flex items-center gap-2">
-                <button onClick={loadSample} className="btn-secondary text-[11px] py-1 px-2.5">Load Sample</button>
-                <button onClick={() => { setTitle(''); setBullet1(''); setBullet2(''); }} className="btn-secondary text-[11px] py-1 px-2.5 text-red-400">
-                  <Trash2 className="w-3 h-3" />
-                </button>
-              </div>
+          {/* Editor */}
+          <div className="editor-surface space-y-5">
+            <div className="flex items-center justify-between text-xs">
+              <span className="font-bold text-slate-800">Edit Listing Copy</span>
+              <button onClick={loadSample} className="btn-ui text-xs py-1 px-2.5">Load Sample</button>
             </div>
 
-            {/* Title input */}
-            <div className="space-y-1">
-              <div className="flex justify-between">
-                <label className="text-gray-300 font-medium">Product Title</label>
-                <span className={titleLen > titleMax ? 'text-red-400 font-bold' : 'text-amber-400'}>
-                  {titleLen} / 200 chars ({titleLen <= titleRecommended ? 'Optimal Search Display' : 'Acceptable'})
+            {/* Product Title */}
+            <div className="space-y-1.5">
+              <div className="flex justify-between text-xs font-semibold">
+                <label className="text-slate-700">Product Title (75 Mobile Cutoff / 200 Max)</label>
+                <span className={`font-mono ${titleLen > titleLimitMax ? 'text-red-600 font-bold' : 'text-slate-500'}`}>
+                  {titleLen} / {titleLimitMax} Chars
                 </span>
               </div>
-              <textarea
-                className="editor-textarea min-h-[90px]"
-                placeholder="Enter Amazon Product Title..."
+              <input
+                type="text"
+                className="w-full bg-slate-50 border border-slate-200 rounded-lg px-3.5 py-2.5 text-sm outline-none focus:border-indigo-600 text-slate-900 font-medium"
+                placeholder="Enter Amazon product title..."
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
               />
+              <p className="text-[11px] text-slate-400 font-medium">
+                {titleLen > titleLimitMobile ? `⚠️ Mobile users may experience truncation after char 75.` : `✓ Optimal mobile title length.`}
+              </p>
             </div>
 
-            {/* Bullet Point 1 */}
-            <div className="space-y-1">
-              <div className="flex justify-between">
-                <label className="text-gray-300 font-medium">Bullet Point 1</label>
-                <span className={b1Len > bulletMax ? 'text-red-400 font-bold' : 'text-gray-400'}>
-                  {b1Len} / 200 chars
+            {/* Feature Bullet */}
+            <div className="space-y-1.5">
+              <div className="flex justify-between text-xs font-semibold">
+                <label className="text-slate-700">Feature Bullet Point (500 Max)</label>
+                <span className={`font-mono ${bulletLen > bulletLimitMax ? 'text-red-600 font-bold' : 'text-slate-500'}`}>
+                  {bulletLen} / {bulletLimitMax} Chars
                 </span>
               </div>
               <textarea
-                className="editor-textarea min-h-[70px]"
-                placeholder="Enter Bullet Point 1..."
-                value={bullet1}
-                onChange={(e) => setBullet1(e.target.value)}
+                className="w-full bg-slate-50 border border-slate-200 rounded-lg p-3.5 text-sm outline-none focus:border-indigo-600 text-slate-900 font-medium min-h-[120px] resize-y"
+                placeholder="Enter feature bullet point text..."
+                value={bullet}
+                onChange={(e) => setBullet(e.target.value)}
               />
             </div>
 
-            {/* Bullet Point 2 */}
-            <div className="space-y-1">
-              <div className="flex justify-between">
-                <label className="text-gray-300 font-medium">Bullet Point 2</label>
-                <span className={b2Len > bulletMax ? 'text-red-400 font-bold' : 'text-gray-400'}>
-                  {b2Len} / 200 chars
-                </span>
-              </div>
-              <textarea
-                className="editor-textarea min-h-[70px]"
-                placeholder="Enter Bullet Point 2..."
-                value={bullet2}
-                onChange={(e) => setBullet2(e.target.value)}
-              />
-            </div>
-
-            <button onClick={handleCopy} className="btn-primary w-full justify-center">
-              {copied ? <Check className="w-4 h-4 text-emerald-300" /> : <Copy className="w-4 h-4" />}
-              {copied ? 'Listing Text Copied!' : 'Copy Amazon Listing Text'}
+            <button onClick={handleCopy} className="btn-ui btn-ui-primary w-full py-3">
+              {copied ? <Check className="w-4 h-4 text-white" /> : <Copy className="w-4 h-4 text-white" />}
+              {copied ? 'Copied Amazon Listing!' : 'Copy Listing Copy'}
             </button>
           </div>
 
-          {/* Right Amazon Live Preview & Alerts */}
+          {/* Compliance & Guidelines */}
           <div className="space-y-4">
-            <div className="flex items-center justify-between text-xs text-gray-400">
-              <span className="font-semibold text-white flex items-center gap-1.5">
-                <ShoppingBag className="w-4 h-4 text-amber-400" /> Amazon PDP Snippet
+            <div className="flex items-center justify-between text-xs text-slate-500 font-bold">
+              <span className="text-slate-800 flex items-center gap-1.5">
+                <AlertTriangle className="w-4 h-4 text-amber-500" /> Amazon Policy Check
               </span>
-              <span>Guideline Compliance</span>
+              <span>Policy Audit</span>
             </div>
 
-            {/* Simulated Amazon Card */}
-            <div className="preview-box space-y-3 border border-amber-200">
-              <div className="flex gap-3">
-                <div className="w-20 h-20 rounded bg-gray-100 border border-gray-200 flex items-center justify-center text-[10px] text-gray-400 shrink-0 font-bold">
-                  📦 Product Image
+            <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-md space-y-4">
+              <h3 className="text-sm font-bold text-slate-900">Restricted Promotional Claims Scan</h3>
+              {foundWords.length > 0 ? (
+                <div className="bg-red-50 border border-red-200 p-3.5 rounded-xl space-y-1">
+                  <span className="text-xs font-bold text-red-700">⚠️ Prohibited Terms Found:</span>
+                  <div className="flex flex-wrap gap-1.5 pt-1">
+                    {foundWords.map((w, idx) => (
+                      <span key={idx} className="bg-red-200 text-red-900 text-xs font-mono font-bold px-2 py-0.5 rounded">
+                        {w}
+                      </span>
+                    ))}
+                  </div>
+                  <p className="text-[11px] text-red-600 pt-1 font-medium">
+                    Amazon suppresses listings containing subjective claims like &quot;best seller&quot; or promotional text in titles.
+                  </p>
                 </div>
-                <div className="space-y-1 text-xs">
-                  <h3 className="font-semibold text-blue-900 leading-snug">
-                    {title || 'Amazon Product Title Will Appear Here'}
-                  </h3>
-                  <div className="text-amber-500 text-[11px] font-bold">⭐⭐⭐⭐☆ 4.6 (1,240 ratings)</div>
-                  <div className="text-red-700 font-bold text-sm">$29.99</div>
+              ) : (
+                <div className="bg-emerald-50 border border-emerald-200 p-3.5 rounded-xl text-xs font-bold text-emerald-800">
+                  ✓ No restricted promotional terms detected in listing text.
                 </div>
-              </div>
-
-              {/* Bullet Points */}
-              <div className="pt-2 border-t border-gray-100 text-xs text-gray-800 space-y-1.5">
-                <p className="font-bold text-gray-900">About this item:</p>
-                <ul className="list-disc list-inside space-y-1 text-[11px]">
-                  <li>{bullet1 || 'Bullet point 1 content...'}</li>
-                  <li>{bullet2 || 'Bullet point 2 content...'}</li>
-                </ul>
-              </div>
+              )}
             </div>
-
-            {/* Forbidden Term Alerts */}
-            {titleForbidden.length > 0 ? (
-              <div className="flex items-center gap-2 text-xs text-red-400 bg-red-950/40 border border-red-800/40 p-3 rounded-lg">
-                <ShieldAlert className="w-4 h-4 shrink-0" />
-                <span>
-                  Amazon Style Guide flags promotional terms like: <strong>{titleForbidden.join(', ')}</strong>. Remove them to prevent suppression.
-                </span>
-              </div>
-            ) : (
-              <div className="flex items-center gap-2 text-xs text-emerald-400 bg-emerald-950/40 border border-emerald-800/40 p-3 rounded-lg">
-                <CheckCircle2 className="w-4 h-4 shrink-0" />
-                <span>No forbidden promotional keywords detected. Good job!</span>
-              </div>
-            )}
           </div>
         </div>
       </div>

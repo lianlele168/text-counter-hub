@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { Instagram, Copy, Check, Trash2, ArrowLeft, Hash, AlertCircle } from 'lucide-react';
+import { Instagram, Copy, Check, Trash2, ArrowLeft, Hash } from 'lucide-react';
 import SchemaMarkup from '@/components/SchemaMarkup';
 
 export default function InstagramCounterPage() {
@@ -11,15 +11,12 @@ export default function InstagramCounterPage() {
 
   const charCount = text.length;
   const maxLimit = 2200;
-  const foldLimit = 125; // Instagram feed truncation line
+  const foldLimit = 125; // First line cutoff threshold
 
-  // Count hashtags in text
-  const hashtags = (text.match(/#[a-zA-Z0-9_]+/g) || []);
+  // Count Hashtags
+  const hashtags = text.match(/#[^\s#]+/g) || [];
   const hashtagCount = hashtags.length;
-  const hashtagMax = 30;
-
-  const charOver = charCount > maxLimit;
-  const hashtagOver = hashtagCount > hashtagMax;
+  const maxHashtags = 30;
 
   const handleCopy = () => {
     if (!text) return;
@@ -30,138 +27,113 @@ export default function InstagramCounterPage() {
 
   const loadSample = () => {
     setText(
-      `Unlocking the secret to 10x organic reach on Instagram Reels 🚀✨\n\n` +
-      `Stop creating content for everyone. Instead, focus on these 3 micro-hooks that convert scrollers into followers within 3 seconds.\n\n` +
-      `Save this post for your next content strategy session! 📌\n\n` +
-      `#contentcreator #instagramgrowth #socialmediamarketing #digitalmarketing #marketingtips #growthhacking #viralreels`
+      `5 Minimalist workspace upgrades that boosted our focus in 2026 ☕✨\n\n` +
+      `Keeping your desk clutter-free directly reduces cognitive load and keeps creativity flowing.\n\n` +
+      `#minimalism #productivity #workspace #setup #desksetup #software #designer`
     );
   };
 
   return (
     <>
       <SchemaMarkup
-        name="Instagram Caption & Hashtag Limit Counter"
-        description="Free online tool to count Instagram caption characters (2,200 limit), preview 125-character feed truncation line, and count hashtags (30 max limit)."
+        name="Instagram Caption & Hashtag Counter"
+        description="Free online Instagram caption character counter (2,200 max) and hashtag counter (30 max) with first-line 125-character truncation preview."
         url="https://countwise.app/instagram-character-counter"
       />
 
-      <div className="space-y-8 max-w-4xl mx-auto">
-        {/* Back Link */}
-        <Link href="/" className="inline-flex items-center gap-1.5 text-xs text-gray-400 hover:text-white transition-colors">
-          <ArrowLeft className="w-3.5 h-3.5" /> Back to All-in-One Counter
+      <div className="space-y-8">
+        <Link href="/" className="inline-flex items-center gap-1.5 text-xs text-slate-500 hover:text-indigo-600 font-semibold transition-colors">
+          <ArrowLeft className="w-3.5 h-3.5" /> Back to All Counter Workspace
         </Link>
 
-        {/* Header */}
-        <div className="space-y-3">
+        {/* Title */}
+        <div className="space-y-2">
           <div className="flex items-center gap-2">
-            <div className="w-9 h-9 rounded-xl bg-pink-600 flex items-center justify-center text-white shadow-lg shadow-pink-500/25">
-              <Instagram className="w-5 h-5" />
+            <div className="w-8 h-8 rounded-lg bg-pink-50 border border-pink-200 flex items-center justify-center text-pink-600 font-bold">
+              <Instagram className="w-4 h-4" />
             </div>
-            <span className="badge">Instagram Tool</span>
+            <span className="bg-pink-100 text-pink-800 text-xs font-bold px-2.5 py-0.5 rounded-full">Instagram Caption</span>
           </div>
-          <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight">
-            Instagram Caption <span className="text-pink-400">& Hashtag Limit Counter</span>
+          <h1>
+            Instagram Caption & Hashtag Inspector
           </h1>
-          <p className="text-gray-400 text-sm md:text-base leading-relaxed">
-            Instagram allows up to 2,200 characters per caption and a maximum of 30 hashtags. Feed posts truncate after 125 characters—make sure your first sentence hooks scrollers immediately.
+          <p className="text-slate-600 text-sm max-w-2xl font-medium">
+            Instagram allows up to 2,200 characters and 30 hashtags per post. Captions are truncated after the first 125 characters in the user feed.
           </p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {/* Left Editor */}
-          <div className="glass-panel p-5 space-y-4">
+          {/* Editor */}
+          <div className="editor-surface space-y-4">
             <div className="flex items-center justify-between text-xs">
-              <span className="font-semibold text-gray-300">Compose Instagram Caption</span>
+              <span className="font-bold text-slate-800">Instagram Caption Draft</span>
               <div className="flex items-center gap-2">
-                <button onClick={loadSample} className="btn-secondary text-[11px] py-1 px-2.5">Load Sample</button>
-                <button onClick={() => setText('')} className="btn-secondary text-[11px] py-1 px-2.5 text-red-400">
-                  <Trash2 className="w-3 h-3" />
+                <button onClick={loadSample} className="btn-ui text-xs py-1 px-2.5">Load Sample</button>
+                <button onClick={() => setText('')} className="btn-ui btn-ui-danger text-xs py-1 px-2.5">
+                  <Trash2 className="w-3.5 h-3.5" /> Clear
                 </button>
               </div>
             </div>
 
             <textarea
               className="editor-textarea min-h-[260px]"
-              placeholder="Paste or write your Instagram caption and hashtags here..."
+              placeholder="Write or paste your Instagram caption and #hashtags here..."
               value={text}
               onChange={(e) => setText(e.target.value)}
             />
 
-            {/* Quick Metrics */}
-            <div className="grid grid-cols-2 gap-3 text-xs">
-              <div className="stat-box">
-                <span className="stat-label">Caption Length</span>
-                <span className={`stat-value ${charOver ? 'text-red-400' : 'text-pink-400'}`}>
-                  {charCount} <span className="text-xs text-gray-400 font-normal">/ {maxLimit}</span>
+            {/* Metrics */}
+            <div className="grid grid-cols-2 gap-4 text-xs font-medium">
+              <div className="bg-slate-50 border border-slate-200 p-3 rounded-xl flex items-center justify-between">
+                <span className="text-slate-500">Caption Limit</span>
+                <span className={`font-mono font-bold ${charCount > maxLimit ? 'text-red-600' : 'text-slate-800'}`}>
+                  {charCount} / {maxLimit}
                 </span>
               </div>
-
-              <div className="stat-box">
-                <span className="stat-label flex items-center gap-1">
-                  <Hash className="w-3 h-3 text-purple-400" /> Hashtags
-                </span>
-                <span className={`stat-value ${hashtagOver ? 'text-red-400' : 'text-purple-400'}`}>
-                  {hashtagCount} <span className="text-xs text-gray-400 font-normal">/ {hashtagMax}</span>
+              <div className="bg-slate-50 border border-slate-200 p-3 rounded-xl flex items-center justify-between">
+                <span className="text-slate-500 flex items-center gap-1"><Hash className="w-3.5 h-3.5 text-pink-500" /> Hashtags</span>
+                <span className={`font-mono font-bold ${hashtagCount > maxHashtags ? 'text-red-600' : 'text-slate-800'}`}>
+                  {hashtagCount} / {maxHashtags}
                 </span>
               </div>
             </div>
 
-            {/* Warning banners */}
-            {hashtagOver && (
-              <div className="flex items-center gap-2 text-xs text-red-400 bg-red-950/40 border border-red-800/40 p-3 rounded-lg">
-                <AlertCircle className="w-4 h-4 shrink-0" />
-                <span>Instagram blocks captions with more than 30 hashtags. You have {hashtagCount}.</span>
-              </div>
-            )}
-
-            <button onClick={handleCopy} className="btn-primary w-full justify-center">
-              {copied ? <Check className="w-4 h-4 text-emerald-300" /> : <Copy className="w-4 h-4" />}
-              {copied ? 'Caption Copied!' : 'Copy Instagram Caption'}
+            <button onClick={handleCopy} className="btn-ui btn-ui-primary w-full py-3">
+              {copied ? <Check className="w-4 h-4 text-white" /> : <Copy className="w-4 h-4 text-white" />}
+              {copied ? 'Copied Caption!' : 'Copy Instagram Caption'}
             </button>
           </div>
 
-          {/* Right Simulated Instagram Feed Card */}
+          {/* Feed Preview */}
           <div className="space-y-4">
-            <div className="flex items-center justify-between text-xs text-gray-400">
-              <span className="font-semibold text-white flex items-center gap-1.5">
-                <Instagram className="w-4 h-4 text-pink-400" /> Feed Post Preview
+            <div className="flex items-center justify-between text-xs text-slate-500 font-bold">
+              <span className="text-slate-800 flex items-center gap-1.5">
+                <Instagram className="w-4 h-4 text-pink-600" /> Feed Truncation Preview
               </span>
-              <span>125 Chars Feed Cutoff</span>
+              <span>125 Character Fold</span>
             </div>
 
-            <div className="preview-box space-y-3 border border-gray-200">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-600 p-0.5">
-                    <div className="w-full h-full bg-white rounded-full flex items-center justify-center text-[10px] font-bold">
-                      IG
-                    </div>
-                  </div>
-                  <span className="text-xs font-bold text-gray-900">creator_studio</span>
+            <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-md space-y-3">
+              <div className="flex items-center gap-2 text-xs font-bold text-slate-900">
+                <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-amber-500 to-pink-600 flex items-center justify-center text-white text-[10px]">
+                  IG
                 </div>
-                <span className="text-gray-400 text-xs">•••</span>
+                <span>instagram_creator</span>
               </div>
 
-              {/* Image Placeholder Box */}
-              <div className="w-full h-48 bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900 rounded-lg flex items-center justify-center text-white text-xs font-bold shadow-inner">
-                ✨ Photo / Reel Media Asset
-              </div>
-
-              {/* Caption Text with 125 char fold */}
-              <div className="text-xs text-gray-900 leading-relaxed font-sans">
-                <span className="font-bold mr-1.5">creator_studio</span>
+              <div className="text-xs text-slate-800 leading-relaxed font-sans pt-1">
                 {text ? (
                   <>
-                    <span className="bg-pink-100 text-pink-950 px-1 rounded font-medium">
+                    <span className="bg-pink-50 text-pink-900 px-1 rounded font-semibold border border-pink-200">
                       {text.slice(0, foldLimit)}
                     </span>
                     {text.length > foldLimit && (
-                      <span className="text-gray-400 ml-1 font-semibold">...more</span>
+                      <span className="text-slate-400 font-bold ml-1 cursor-pointer">...more</span>
                     )}
                   </>
                 ) : (
-                  <span className="text-gray-400 italic">
-                    Caption text preview will appear here. Highlighted pink text shows what is visible before &quot;...more&quot; is clicked.
+                  <span className="text-slate-400 italic">
+                    Your caption preview will render here. Highlighted text shows the first 125 characters visible before users tap "...more".
                   </span>
                 )}
               </div>
