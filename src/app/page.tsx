@@ -3,8 +3,8 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { 
-  Type, Copy, Trash2, Check, Sparkles, ArrowRight, Linkedin, 
-  Twitter, Search, Instagram, ShoppingBag, Clock, FileText, BarChart2, Zap
+  Copy, Trash2, Check, Sparkles, ArrowRight, Linkedin, 
+  Twitter, Search, Instagram, ShoppingBag, Clock
 } from 'lucide-react';
 import SchemaMarkup from '@/components/SchemaMarkup';
 
@@ -12,7 +12,7 @@ export default function HomePage() {
   const [text, setText] = useState('');
   const [copied, setCopied] = useState(false);
 
-  // Statistics calculation
+  // Core Metrics
   const charCount = text.length;
   const charNoSpaces = text.replace(/\s/g, '').length;
   
@@ -23,10 +23,10 @@ export default function HomePage() {
   const paragraphCount = text.trim() ? text.split(/\n+/).filter(Boolean).length : 0;
   
   // Reading & speaking time estimates
-  const readingTimeMinutes = (wordCount / 200).toFixed(1);
-  const speakingTimeMinutes = (wordCount / 130).toFixed(1);
+  const readingTimeMinutes = Math.ceil(wordCount / 200);
+  const speakingTimeMinutes = Math.ceil(wordCount / 130);
   
-  // Letter / Digit / Symbol breakdown
+  // Character breakdowns
   const letterCount = (text.match(/[a-zA-Z]/g) || []).length;
   const digitCount = (text.match(/[0-9]/g) || []).length;
   const spaceCount = (text.match(/\s/g) || []).length;
@@ -44,8 +44,8 @@ export default function HomePage() {
 
   const loadSample = () => {
     setText(
-      `CountWise is a privacy-first, zero-latency text and character counter designed for modern creators, marketers, and SEO specialists.\n\n` +
-      `Whether you are crafting a high-engagement LinkedIn hook, splitting a long essay into a 280-character Twitter/X thread, or optimizing Google title tags and meta descriptions, CountWise provides instantaneous real-time metrics right in your browser.`
+      `CountWise is a privacy-first, ultra-fast character counter and text analysis workspace built for digital creators, writers, and SEO professionals.\n\n` +
+      `Paste or write your content here to instantly calculate character count, word count, reading duration, and sentence structure. Choose specialized platform tools below to optimize LinkedIn hooks, Twitter threads, and Google SERP snippets.`
     );
   };
 
@@ -54,9 +54,7 @@ export default function HomePage() {
     if (type === 'upper') setText(text.toUpperCase());
     if (type === 'lower') setText(text.toLowerCase());
     if (type === 'title') {
-      setText(
-        text.replace(/\w\S*/g, (txt) => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase())
-      );
+      setText(text.replace(/\w\S*/g, (txt) => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()));
     }
     if (type === 'slug') {
       setText(
@@ -72,51 +70,45 @@ export default function HomePage() {
 
   const sceneTools = [
     {
-      title: 'LinkedIn Hook Preview',
-      desc: 'Check 3,000 char post limit and visualize the exact 210-character "See More" desktop/mobile fold cutoff line.',
+      title: 'LinkedIn Hook Previewer',
+      desc: 'Visualize the 210-character "See More" desktop & mobile fold line before scrollers truncated your post.',
       href: '/linkedin-character-counter',
       icon: Linkedin,
-      color: 'from-blue-600 to-cyan-500',
       badge: 'Hook Optimizer'
     },
     {
       title: 'Twitter Thread Splitter',
-      desc: 'Split long articles into auto-numbered 280-character Twitter/X tweet cards ready to copy & post.',
+      desc: 'Automatically split long articles into numbered 280-character Twitter/X tweet cards ready to post.',
       href: '/twitter-character-counter',
       icon: Twitter,
-      color: 'from-sky-500 to-indigo-500',
-      badge: 'Auto Splitter'
+      badge: 'Thread Splitter'
     },
     {
-      title: 'Google SERP Snippet Preview',
-      desc: 'Simulate live Google desktop and mobile search snippet results with pixel width & character limits.',
+      title: 'Google SERP Previewer',
+      desc: 'Simulate live Google desktop and mobile search snippets with pixel width and character count rules.',
       href: '/seo-meta-length-checker',
       icon: Search,
-      color: 'from-emerald-500 to-teal-600',
       badge: 'SEO Tool'
     },
     {
-      title: 'Instagram Caption & Hashtag',
-      desc: 'Track 2,200 character limit, caption preview, and count maximum 30 hashtags.',
+      title: 'Instagram Caption & Hashtags',
+      desc: 'Track 2,200 character limit, preview 125-char cutoff line, and count maximum 30 hashtag allowance.',
       href: '/instagram-character-counter',
       icon: Instagram,
-      color: 'from-pink-500 to-rose-600',
-      badge: 'Caption Checker'
+      badge: 'Caption Tool'
     },
     {
       title: 'Amazon Listing Checker',
-      desc: 'Verify Amazon product titles (75/200 chars) and bullet point guidelines for FBA sellers.',
+      desc: 'Validate Amazon product title (75/200 chars) and bullet points while flagging forbidden promo words.',
       href: '/amazon-listing-character-counter',
       icon: ShoppingBag,
-      color: 'from-amber-500 to-orange-600',
       badge: 'FBA Seller'
     },
     {
-      title: 'Speech & Reading Timer',
-      desc: 'Convert word count into exact speaking minutes for keynote speeches, presentations, and videos.',
+      title: 'Speech & Keynote Timer',
+      desc: 'Convert word count into exact speaking minutes and seconds for keynote presentations and videos.',
       href: '/words-to-time-calculator',
       icon: Clock,
-      color: 'from-purple-600 to-indigo-600',
       badge: 'Speech Estimator'
     },
   ];
@@ -124,126 +116,119 @@ export default function HomePage() {
   return (
     <>
       <SchemaMarkup 
-        name="CountWise - All-in-One Character & Word Counter"
+        name="CountWise - Character & Word Counter Workspace"
         description="Free real-time character counter, word counter, and text analysis suite with privacy-first client-side processing."
         url="https://countwise.app"
       />
 
-      <div className="space-y-10">
-        {/* Hero Banner */}
-        <section className="text-center space-y-4 max-w-3xl mx-auto pt-4">
-          <div className="badge mx-auto">
-            <Sparkles className="w-3.5 h-3.5" /> 100% Client-Side & Private Text Suite
+      <div className="space-y-12 py-4">
+        {/* Hero Header */}
+        <section className="text-center space-y-3 max-w-2xl mx-auto">
+          <div className="ui-badge mx-auto">
+            <Sparkles className="w-3.5 h-3.5" /> Privacy-First Client-Side Suite
           </div>
-          <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight">
-            Real-Time <span className="gradient-text">Character & Word Counter</span>
+          <h1>
+            Real-Time <span className="text-gradient">Text Analysis Workspace</span>
           </h1>
-          <p className="text-gray-400 text-base md:text-lg">
-            Instant live text analysis with word count, character count, reading time, and custom platform tools for LinkedIn, Twitter, and SEO.
+          <p className="text-gray-400 text-sm md:text-base leading-relaxed">
+            Instant character and word metrics with live platform previews for creators, marketers, and SEO specialists.
           </p>
         </section>
 
-        {/* Primary Workspace Panel */}
-        <section className="glass-panel p-6 space-y-6">
-          {/* Main Action Bar */}
-          <div className="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-white/10 text-xs">
-            <div className="flex items-center gap-2 text-gray-400">
-              <FileText className="w-4 h-4 text-indigo-400" />
-              <span className="font-semibold text-white">Live Text Editor</span>
+        {/* Primary Editor Workspace */}
+        <section className="surface-card p-6 md:p-8 space-y-6">
+          {/* Top Metrics Strip */}
+          <div className="metrics-strip">
+            <div className="metric-card">
+              <span className="metric-label">Characters</span>
+              <span className="metric-value metric-value-primary">{charCount.toLocaleString()}</span>
             </div>
-            <div className="flex items-center gap-2">
-              <button onClick={loadSample} className="btn-secondary text-xs py-1.5 px-3">
-                Load Sample
-              </button>
-              <button onClick={handleCopy} className="btn-secondary text-xs py-1.5 px-3">
-                {copied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
-                {copied ? 'Copied!' : 'Copy Text'}
-              </button>
-              <button onClick={handleClear} className="btn-secondary text-xs py-1.5 px-3 text-red-400 hover:text-red-300">
-                <Trash2 className="w-3.5 h-3.5" />
-                Clear
-              </button>
+            <div className="metric-card">
+              <span className="metric-label">Words</span>
+              <span className="metric-value">{wordCount.toLocaleString()}</span>
+            </div>
+            <div className="metric-card">
+              <span className="metric-label">No Spaces</span>
+              <span className="metric-value">{charNoSpaces.toLocaleString()}</span>
+            </div>
+            <div className="metric-card">
+              <span className="metric-label">Sentences</span>
+              <span className="metric-value">{sentenceCount}</span>
+            </div>
+            <div className="metric-card">
+              <span className="metric-label">Paragraphs</span>
+              <span className="metric-value">{paragraphCount}</span>
+            </div>
+            <div className="metric-card">
+              <span className="metric-label">Reading Time</span>
+              <span className="metric-value">{readingTimeMinutes} <span className="text-xs text-gray-500 font-normal">min</span></span>
             </div>
           </div>
 
-          {/* Text Area */}
+          {/* Text Area Input */}
           <textarea
-            className="editor-textarea"
-            placeholder="Type or paste your text here to count characters, words, sentences, and reading duration in real-time..."
+            className="main-textarea"
+            placeholder="Type or paste your content here..."
             value={text}
             onChange={(e) => setText(e.target.value)}
           />
 
-          {/* Primary Quick Stats Grid */}
-          <div className="stats-grid">
-            <div className="stat-box">
-              <span className="stat-label">Characters</span>
-              <span className="stat-value accent">{charCount.toLocaleString()}</span>
-            </div>
-            <div className="stat-box">
-              <span className="stat-label">Words</span>
-              <span className="stat-value">{wordCount.toLocaleString()}</span>
-            </div>
-            <div className="stat-box">
-              <span className="stat-label">Without Spaces</span>
-              <span className="stat-value">{charNoSpaces.toLocaleString()}</span>
-            </div>
-            <div className="stat-box">
-              <span className="stat-label">Sentences</span>
-              <span className="stat-value">{sentenceCount}</span>
-            </div>
-            <div className="stat-box">
-              <span className="stat-label">Paragraphs</span>
-              <span className="stat-value">{paragraphCount}</span>
-            </div>
-            <div className="stat-box">
-              <span className="stat-label">Reading Time</span>
-              <span className="stat-value text-indigo-400">{readingTimeMinutes} <span className="text-xs text-gray-400 font-normal">min</span></span>
-            </div>
-          </div>
-
-          {/* Secondary Detail Stats & Case Convert Bar */}
-          <div className="pt-4 border-t border-white/10 flex flex-wrap items-center justify-between gap-4 text-xs">
-            <div className="flex flex-wrap items-center gap-4 text-gray-400">
+          {/* Bottom Toolbar & Controls */}
+          <div className="flex flex-wrap items-center justify-between gap-4 pt-2 border-t border-white/5 text-xs">
+            {/* Secondary Character Breakdown */}
+            <div className="flex items-center gap-4 text-gray-400 font-mono">
               <span>Letters: <strong className="text-white">{letterCount}</strong></span>
               <span>Digits: <strong className="text-white">{digitCount}</strong></span>
               <span>Spaces: <strong className="text-white">{spaceCount}</strong></span>
-              <span>Speaking: <strong className="text-white">{speakingTimeMinutes} min</strong></span>
+              <span>Speaking: <strong className="text-white">{speakingTimeMinutes}m</strong></span>
             </div>
 
-            {/* Quick Case Conversions */}
-            <div className="flex items-center gap-1.5 flex-wrap">
-              <span className="text-gray-500 font-medium mr-1">Case:</span>
-              <button onClick={() => applyCaseChange('upper')} className="btn-secondary text-[11px] py-1 px-2.5">UPPER</button>
-              <button onClick={() => applyCaseChange('lower')} className="btn-secondary text-[11px] py-1 px-2.5">lower</button>
-              <button onClick={() => applyCaseChange('title')} className="btn-secondary text-[11px] py-1 px-2.5">Title Case</button>
-              <button onClick={() => applyCaseChange('slug')} className="btn-secondary text-[11px] py-1 px-2.5">url-slug</button>
+            {/* Actions */}
+            <div className="flex items-center gap-2 flex-wrap">
+              {/* Case Converters */}
+              <div className="flex items-center gap-1 bg-white/5 p-1 rounded-lg border border-white/5 mr-2">
+                <button onClick={() => applyCaseChange('upper')} className="ui-btn text-[11px] py-1 px-2">UPPER</button>
+                <button onClick={() => applyCaseChange('lower')} className="ui-btn text-[11px] py-1 px-2">lower</button>
+                <button onClick={() => applyCaseChange('title')} className="ui-btn text-[11px] py-1 px-2">Title</button>
+                <button onClick={() => applyCaseChange('slug')} className="ui-btn text-[11px] py-1 px-2">slug</button>
+              </div>
+
+              <button onClick={loadSample} className="ui-btn text-xs">Sample</button>
+              <button onClick={handleCopy} className="ui-btn ui-btn-primary text-xs">
+                {copied ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
+                {copied ? 'Copied' : 'Copy'}
+              </button>
+              <button onClick={handleClear} className="ui-btn ui-btn-danger text-xs">
+                <Trash2 className="w-3.5 h-3.5" /> Clear
+              </button>
             </div>
           </div>
         </section>
 
-        {/* Scene-Specific Specialized Tools Showcase Grid */}
-        <section className="space-y-6 pt-6">
-          <div className="flex items-center justify-between">
-            <div>
-              <h2 className="text-2xl font-bold">Platform & Scenario Specialized Tools</h2>
-              <p className="text-gray-400 text-sm">Optimize your content for specific platforms with visual previews & limits.</p>
-            </div>
+        {/* Platform Tools Grid */}
+        <section className="space-y-6">
+          <div>
+            <h2>Platform & Scenario Tools</h2>
+            <p className="text-gray-400 text-xs mt-1">Specialized text counters with visual feed previews and platform constraints.</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
             {sceneTools.map((tool) => {
               const Icon = tool.icon;
               return (
-                <Link key={tool.href} href={tool.href} className="glass-card group flex flex-col justify-between">
+                <Link 
+                  key={tool.href} 
+                  href={tool.href} 
+                  className="surface-card surface-card-interactive p-6 flex flex-col justify-between group"
+                >
                   <div className="space-y-3">
                     <div className="flex items-center justify-between">
-                      <div className={`w-10 h-10 rounded-xl bg-gradient-to-tr ${tool.color} flex items-center justify-center shadow-lg`}>
-                        <Icon className="w-5 h-5 text-white" />
+                      <div className="w-9 h-9 rounded-lg bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400">
+                        <Icon className="w-4 h-4" />
                       </div>
-                      <span className="badge text-[10px]">{tool.badge}</span>
+                      <span className="ui-badge text-[10px]">{tool.badge}</span>
                     </div>
-                    <h3 className="font-heading font-bold text-lg text-white group-hover:text-indigo-400 transition-colors">
+                    <h3 className="group-hover:text-indigo-400 transition-colors">
                       {tool.title}
                     </h3>
                     <p className="text-gray-400 text-xs leading-relaxed">
@@ -251,35 +236,13 @@ export default function HomePage() {
                     </p>
                   </div>
 
-                  <div className="pt-4 mt-4 border-t border-white/5 flex items-center text-xs font-semibold text-indigo-400 group-hover:text-indigo-300">
-                    <span>Open Specialized Tool</span>
-                    <ArrowRight className="w-3.5 h-3.5 ml-1.5 group-hover:translate-x-1 transition-transform" />
+                  <div className="pt-4 mt-4 border-t border-white/5 flex items-center justify-between text-xs font-medium text-indigo-400">
+                    <span>Open Tool</span>
+                    <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
                   </div>
                 </Link>
               );
             })}
-          </div>
-        </section>
-
-        {/* Informational SEO Guide & FAQ */}
-        <section className="glass-panel p-8 space-y-6 text-sm text-gray-300">
-          <h2 className="text-xl font-bold text-white flex items-center gap-2">
-            <Zap className="w-5 h-5 text-amber-400" />
-            Why Accurate Character Counting Matters for Social Media & SEO
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 leading-relaxed">
-            <div className="space-y-2">
-              <h3 className="font-semibold text-white">Social Media Limits & Hook Optimization</h3>
-              <p className="text-xs text-gray-400">
-                Platforms like LinkedIn truncate posts after approximately 210 characters with a &quot;See More&quot; button. If your hook isn&apos;t catchy within those first 210 characters, your reach drops dramatically. Similarly, Twitter imposes a 280-character hard limit per tweet.
-              </p>
-            </div>
-            <div className="space-y-2">
-              <h3 className="font-semibold text-white">SEO Title & Meta Description Snippets</h3>
-              <p className="text-xs text-gray-400">
-                Google truncates search titles over ~60 characters (or ~580 pixels) and meta descriptions over ~160 characters. Staying within optimal limits prevents your snippets from being cut off with ellipsis in search engine results.
-              </p>
-            </div>
           </div>
         </section>
       </div>

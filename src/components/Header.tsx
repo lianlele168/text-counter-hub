@@ -2,96 +2,65 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { Type, Linkedin, Twitter, Search, Instagram, ShoppingBag, Clock, Menu, X, Sparkles } from 'lucide-react';
+import { Type, ChevronDown, Linkedin, Twitter, Search, Instagram, ShoppingBag, Clock } from 'lucide-react';
 
 export default function Header() {
-  const pathname = usePathname();
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
 
-  const navItems = [
-    { href: '/', label: 'All-in-One Counter', icon: Type },
-    { href: '/linkedin-character-counter', label: 'LinkedIn Hook', icon: Linkedin },
-    { href: '/twitter-character-counter', label: 'Twitter Thread', icon: Twitter },
-    { href: '/seo-meta-length-checker', label: 'SEO SERP Preview', icon: Search },
-    { href: '/instagram-character-counter', label: 'Instagram Caption', icon: Instagram },
-    { href: '/amazon-listing-character-counter', label: 'Amazon Seller', icon: ShoppingBag },
-    { href: '/words-to-time-calculator', label: 'Speech Timer', icon: Clock },
+  const tools = [
+    { name: 'All-in-One Counter', href: '/', icon: Type },
+    { name: 'LinkedIn Hook Preview', href: '/linkedin-character-counter', icon: Linkedin },
+    { name: 'Twitter Thread Splitter', href: '/twitter-character-counter', icon: Twitter },
+    { name: 'Google SERP Snippet Preview', href: '/seo-meta-length-checker', icon: Search },
+    { name: 'Instagram Caption & Hashtag', href: '/instagram-character-counter', icon: Instagram },
+    { name: 'Amazon Listing Checker', href: '/amazon-listing-character-counter', icon: ShoppingBag },
+    { name: 'Speech & Reading Timer', href: '/words-to-time-calculator', icon: Clock },
   ];
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-white/10 bg-[#090D16]/80 backdrop-blur-xl">
-      <div className="container flex h-16 items-center justify-between">
+    <header className="sticky top-0 z-50 backdrop-blur-md bg-[#0A0C10]/80 border-b border-white/5">
+      <div className="app-container h-16 flex items-center justify-between">
         {/* Brand Logo */}
         <Link href="/" className="flex items-center gap-2.5 group">
-          <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-indigo-600 via-purple-600 to-pink-500 flex items-center justify-center shadow-lg shadow-indigo-500/20 group-hover:scale-105 transition-transform">
-            <Type className="w-5 h-5 text-white" />
+          <div className="w-8 h-8 rounded-lg bg-indigo-600 flex items-center justify-center text-white shadow-md shadow-indigo-600/20 group-hover:scale-105 transition-transform">
+            <Type className="w-4 h-4" />
           </div>
-          <div className="flex flex-col">
-            <span className="font-heading font-extrabold text-lg tracking-tight text-white flex items-center gap-1">
-              Count<span className="text-indigo-400">Wise</span>
-              <Sparkles className="w-3.5 h-3.5 text-pink-400 animate-pulse" />
-            </span>
-            <span className="text-[10px] text-gray-400 tracking-wider uppercase font-medium">Text & Character Suite</span>
-          </div>
+          <span className="font-bold text-lg tracking-tight text-white">
+            Count<span className="text-indigo-400">Wise</span>
+          </span>
         </Link>
 
-        {/* Desktop Navigation */}
-        <nav className="hidden lg:flex items-center gap-1 bg-white/5 p-1 rounded-full border border-white/10">
-          {navItems.map((item) => {
-            const Icon = item.icon;
-            const isActive = pathname === item.href;
-            return (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold transition-all ${
-                  isActive
-                    ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-md shadow-indigo-500/25'
-                    : 'text-gray-300 hover:text-white hover:bg-white/10'
-                }`}
-              >
-                <Icon className="w-3.5 h-3.5" />
-                <span>{item.label}</span>
-              </Link>
-            );
-          })}
-        </nav>
+        {/* Navigation & Tools Dropdown */}
+        <div className="relative">
+          <button
+            onClick={() => setDropdownOpen(!dropdownOpen)}
+            onBlur={() => setTimeout(() => setDropdownOpen(false), 200)}
+            className="ui-btn text-xs font-medium py-1.5 px-3 bg-white/5 hover:bg-white/10"
+          >
+            <span>Platform Tools</span>
+            <ChevronDown className={`w-3.5 h-3.5 transition-transform ${dropdownOpen ? 'rotate-180' : ''}`} />
+          </button>
 
-        {/* Mobile Hamburger Button */}
-        <button
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="lg:hidden p-2 rounded-lg bg-white/5 border border-white/10 text-gray-300 hover:text-white"
-          aria-label="Toggle Navigation Menu"
-        >
-          {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-        </button>
-      </div>
-
-      {/* Mobile Drawer */}
-      {mobileMenuOpen && (
-        <div className="lg:hidden border-b border-white/10 bg-[#0E1524] px-4 py-3 space-y-1 animate-fade-in">
-          {navItems.map((item) => {
-            const Icon = item.icon;
-            const isActive = pathname === item.href;
-            return (
-              <Link
-                key={item.href}
-                href={item.href}
-                onClick={() => setMobileMenuOpen(false)}
-                className={`flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-sm font-medium transition-all ${
-                  isActive
-                    ? 'bg-indigo-600/30 text-indigo-300 border border-indigo-500/40'
-                    : 'text-gray-300 hover:bg-white/5'
-                }`}
-              >
-                <Icon className="w-4 h-4 text-indigo-400" />
-                <span>{item.label}</span>
-              </Link>
-            );
-          })}
+          {/* Dropdown Menu */}
+          {dropdownOpen && (
+            <div className="absolute right-0 mt-2 w-64 surface-card p-1.5 shadow-2xl z-50 border border-white/10 space-y-0.5 animate-fade-in">
+              {tools.map((t) => {
+                const Icon = t.icon;
+                return (
+                  <Link
+                    key={t.href}
+                    href={t.href}
+                    className="flex items-center gap-2.5 px-3 py-2 text-xs text-gray-300 hover:text-white hover:bg-white/5 rounded-lg transition-colors"
+                  >
+                    <Icon className="w-4 h-4 text-indigo-400 shrink-0" />
+                    <span>{t.name}</span>
+                  </Link>
+                );
+              })}
+            </div>
+          )}
         </div>
-      )}
+      </div>
     </header>
   );
 }
