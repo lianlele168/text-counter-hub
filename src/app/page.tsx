@@ -3,74 +3,29 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { 
-  Copy, Trash2, Check, ShieldCheck, ArrowRight, Linkedin, 
-  Twitter, Search, Instagram, ShoppingBag, Clock, Sparkles, Filter
+  ShieldCheck, ArrowRight, Linkedin, 
+  Twitter, Search, Instagram, ShoppingBag, Clock, Sparkles, Filter, QrCode
 } from 'lucide-react';
 import SchemaMarkup from '@/components/SchemaMarkup';
+import CounterStudio from '@/components/CounterStudio';
 
 export default function HomePage() {
-  const [text, setText] = useState('');
-  const [copied, setCopied] = useState(false);
   const [activeCategory, setActiveCategory] = useState('all');
-
-  // Metrics Calculation
-  const charCount = text.length;
-  const charNoSpaces = text.replace(/\s/g, '').length;
-  
-  // Mixed English words and CJK characters
-  const cjkChars = (text.match(/[\u4e00-\u9fa5\u3040-\u30ff\uac00-\ud7af]/g) || []).length;
-  const latinWords = text.replace(/[\u4e00-\u9fa5\u3040-\u30ff\uac00-\ud7af]/g, ' ').trim() 
-    ? text.replace(/[\u4e00-\u9fa5\u3040-\u30ff\uac00-\ud7af]/g, ' ').trim().split(/\s+/).filter(Boolean).length 
-    : 0;
-  const totalWordCount = cjkChars + latinWords;
-  
-  const sentenceCount = text.trim() ? (text.match(/[^.!?。！？]+[.!?。！？]+/g) || [text]).length : 0;
-  const paragraphCount = text.trim() ? text.split(/\n+/).filter(Boolean).length : 0;
-  const readingTimeMinutes = totalWordCount === 0 ? 0 : Math.max(1, Math.ceil(totalWordCount / 250));
-
-  const handleCopy = () => {
-    if (!text) return;
-    navigator.clipboard.writeText(text);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
-
-  const handleClear = () => {
-    setText('');
-  };
-
-  const loadSample = () => {
-    setText(
-      `Welcome to CountWise—the professional real-time text analysis & character counter workspace.\n\n` +
-      `Paste or write your essay, blog post, or social media caption here to instantly calculate character length, word counts, sentence breaks, and estimated reading time.\n\n` +
-      `Key Feature: All text processing runs 100% locally in your web browser. Your content is never transmitted or saved on any server, guaranteeing maximum data privacy.`
-    );
-  };
-
-  const applyCaseChange = (type: string) => {
-    if (!text) return;
-    if (type === 'upper') setText(text.toUpperCase());
-    if (type === 'lower') setText(text.toLowerCase());
-    if (type === 'title') {
-      setText(text.replace(/\w\S*/g, (txt) => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()));
-    }
-    if (type === 'slug') {
-      setText(
-        text
-          .toLowerCase()
-          .trim()
-          .replace(/[^\w\s-]/g, '')
-          .replace(/[\s_-]+/g, '-')
-          .replace(/^-+|-+$/g, '')
-      );
-    }
-  };
 
   const sceneTools = [
     {
+      id: 'qr',
+      title: 'Vector QR Code Studio',
+      desc: 'Create high-res SVG & PNG QR codes for URLs, WiFi, vCards, and logos with 100% privacy.',
+      href: 'https://qrcode.robloxwikihub.com',
+      icon: QrCode,
+      category: 'utility',
+      badge: 'QR Code Hub'
+    },
+    {
       id: 'linkedin',
-      title: 'LinkedIn Hook Previewer & Counter',
-      desc: 'Count characters (3,000 max) and test your 210-character "...see more" cutoff line before publishing on LinkedIn.',
+      title: 'LinkedIn Hook Cutoff Previewer',
+      desc: 'Count characters (3,000 max) and test your 210-character "...see more" cutoff line before posting.',
       href: '/linkedin-character-counter',
       icon: Linkedin,
       category: 'social',
@@ -79,16 +34,16 @@ export default function HomePage() {
     {
       id: 'twitter',
       title: 'Twitter / X Thread Splitter',
-      desc: 'Auto-split long essays into numbered tweets (1/N) complying with the 280-character limit with one-click copying.',
+      desc: 'Auto-split long essays into numbered tweets complying with the 280-character limit.',
       href: '/twitter-character-counter',
       icon: Twitter,
       category: 'social',
-      badge: 'Twitter Thread'
+      badge: 'Twitter'
     },
     {
       id: 'seo',
-      title: 'Google SERP Snippet Previewer',
-      desc: 'Simulate search engine results. Verify title tags (<60 chars) and meta descriptions (<160 chars) to prevent truncation.',
+      title: 'Google SERP Meta Inspector',
+      desc: 'Simulate search engine results. Test title tags (<60 chars) and meta descriptions (<160 chars).',
       href: '/seo-meta-length-checker',
       icon: Search,
       category: 'seo',
@@ -96,8 +51,8 @@ export default function HomePage() {
     },
     {
       id: 'instagram',
-      title: 'Instagram Caption & Hashtags Inspector',
-      desc: 'Monitor 2,200 character limits, test 125-character first-line truncations, and count hashtag quotas (30 max).',
+      title: 'Instagram Caption & Hashtag Counter',
+      desc: 'Monitor 2,200 character limits, test 125-char truncations, and count hashtag quotas (30 max).',
       href: '/instagram-character-counter',
       icon: Instagram,
       category: 'social',
@@ -106,20 +61,20 @@ export default function HomePage() {
     {
       id: 'amazon',
       title: 'Amazon Seller Listing Inspector',
-      desc: 'Check title lengths (75/200 limit) and bullet point guidelines while flagging prohibited seller promotional words.',
+      desc: 'Verify title lengths (75/200 limit) and bullet point guidelines while flagging promotional words.',
       href: '/amazon-listing-character-counter',
       icon: ShoppingBag,
       category: 'ecommerce',
-      badge: 'Amazon Seller'
+      badge: 'Amazon'
     },
     {
       id: 'speech',
       title: 'Speech & Reading Time Calculator',
-      desc: 'Convert word count into exact speaking minutes and seconds based on slow, average, and fast speech speeds (WPM).',
+      desc: 'Convert word count into exact speaking minutes and seconds based on custom WPM speech speeds.',
       href: '/words-to-time-calculator',
       icon: Clock,
       category: 'time',
-      badge: 'Speech Timer'
+      badge: 'Speech WPM'
     },
   ];
 
@@ -127,145 +82,82 @@ export default function HomePage() {
     ? sceneTools 
     : sceneTools.filter(t => t.category === activeCategory);
 
+  const faqs = [
+    {
+      q: "Is my text data private and secure?",
+      a: "Yes. All text processing and character counting run 100% client-side inside your browser. No text is ever uploaded or stored on any server."
+    },
+    {
+      q: "How does CountWise calculate word count for CJK (Chinese, Japanese, Korean) characters?",
+      a: "Our algorithm intelligently separates Latin words by spaces while counting each CJK ideograph character as an individual word for accurate multi-language analysis."
+    },
+    {
+      q: "What is the LinkedIn '...see more' cutoff limit?",
+      a: "LinkedIn truncates posts after approximately 210 characters on desktop feeds. Our inspector tool lets you test your first 3 lines before posting."
+    }
+  ];
+
   return (
     <>
       <SchemaMarkup 
         name="CountWise - Free Online Character & Word Counter Suite"
         description="Instant, private online character counter and word counter tool with platform-specific length previews."
         url="https://counter.robloxwikihub.com"
+        faqs={faqs}
       />
 
-      <div className="space-y-10">
-        {/* Portal Hero Banner */}
-        <section className="hero-banner flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-          <div className="space-y-3 max-w-2xl">
-            <div className="inline-flex items-center gap-2 bg-indigo-100/80 border border-indigo-200 px-3 py-1 rounded-full text-xs font-bold text-indigo-800">
-              <ShieldCheck className="w-4 h-4 text-indigo-600" /> 100% Client-Side Processing • Maximum Privacy
+      <div className="space-y-12">
+        {/* Portal Hero Section */}
+        <section className="bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 text-white rounded-3xl p-8 md:p-12 shadow-2xl relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+          <div className="relative z-10 max-w-3xl space-y-4">
+            <div className="inline-flex items-center gap-2 bg-white/10 border border-white/15 px-3.5 py-1.5 rounded-full text-xs font-bold text-indigo-300 backdrop-blur">
+              <ShieldCheck className="w-4 h-4 text-emerald-400" /> 100% Client-Side Processing • Zero Server Storage
             </div>
-            <h1>
-              Character & Word Counter Workspace
+
+            <h1 className="text-3xl md:text-5xl font-extrabold text-white tracking-tight leading-tight">
+              Character & Word Counter <span className="text-indigo-400">Studio</span>
             </h1>
-            <p className="text-slate-600 text-sm md:text-base leading-relaxed font-medium">
-              Type or paste your text below to instantly analyze characters, words, sentences, and estimated reading time.
+
+            <p className="text-slate-300 text-sm md:text-base leading-relaxed font-medium">
+              Analyze character lengths, word counts, sentence breaks, and platform truncation limits in real time with absolute browser privacy.
             </p>
           </div>
-
-          {/* Quick Metrics Summary Box */}
-          <div className="bg-white/80 backdrop-blur border border-indigo-100 rounded-2xl p-5 shadow-sm space-y-2 shrink-0 min-w-[240px]">
-            <div className="text-xs font-bold text-slate-400 uppercase tracking-wider">Live Status</div>
-            <div className="flex items-baseline gap-2">
-              <span className="font-mono text-3xl font-extrabold text-indigo-600">{charCount.toLocaleString()}</span>
-              <span className="text-xs font-semibold text-slate-500">Characters</span>
-            </div>
-            <div className="text-xs text-slate-500 font-medium pt-1 border-t border-slate-100 flex justify-between">
-              <span>Words: <strong>{totalWordCount}</strong></span>
-              <span>Paragraphs: <strong>{paragraphCount}</strong></span>
-            </div>
-          </div>
         </section>
 
-        {/* Primary Workspace Panel */}
-        <section className="editor-surface space-y-6">
-          {/* Top 5 Stat Cards */}
-          <div className="stat-pill-grid">
-            <div className="stat-pill">
-              <span className="stat-label">Total Characters</span>
-              <span className="stat-value stat-value-primary">{charCount.toLocaleString()}</span>
-            </div>
-            <div className="stat-pill">
-              <span className="stat-label">Word Count</span>
-              <span className="stat-value">{totalWordCount.toLocaleString()}</span>
-            </div>
-            <div className="stat-pill">
-              <span className="stat-label">No-Space Chars</span>
-              <span className="stat-value">{charNoSpaces.toLocaleString()}</span>
-            </div>
-            <div className="stat-pill">
-              <span className="stat-label">Paragraphs</span>
-              <span className="stat-value">{paragraphCount}</span>
-            </div>
-            <div className="stat-pill">
-              <span className="stat-label">Est. Reading Time</span>
-              <span className="stat-value">{readingTimeMinutes} <span className="text-xs text-slate-400 font-normal">min</span></span>
-            </div>
-          </div>
-
-          {/* Text Area Input */}
-          <textarea
-            className="editor-textarea"
-            placeholder="Type or paste your content here to begin real-time analysis..."
-            value={text}
-            onChange={(e) => setText(e.target.value)}
-          />
-
-          {/* Toolbar Actions */}
-          <div className="flex flex-wrap items-center justify-between gap-4 pt-3 border-t border-slate-200 text-xs">
-            {/* Breakdown Stats */}
-            <div className="flex items-center gap-4 text-slate-500 font-medium">
-              <span>Sentences: <strong className="text-slate-800">{sentenceCount}</strong></span>
-              <span>Asian Chars: <strong className="text-slate-800">{cjkChars}</strong></span>
-              <span>Latin Words: <strong className="text-slate-800">{latinWords}</strong></span>
-            </div>
-
-            {/* Buttons */}
-            <div className="flex items-center gap-2 flex-wrap">
-              {/* Case Converters */}
-              <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-lg border border-slate-200">
-                <button onClick={() => applyCaseChange('upper')} className="btn-ui text-[11px] py-1 px-2.5">UPPER</button>
-                <button onClick={() => applyCaseChange('lower')} className="btn-ui text-[11px] py-1 px-2.5">lower</button>
-                <button onClick={() => applyCaseChange('title')} className="btn-ui text-[11px] py-1 px-2.5">Title Case</button>
-                <button onClick={() => applyCaseChange('slug')} className="btn-ui text-[11px] py-1 px-2.5">URL Slug</button>
-              </div>
-
-              <button onClick={loadSample} className="btn-ui">Load Sample</button>
-              <button onClick={handleCopy} className="btn-ui btn-ui-primary">
-                {copied ? <Check className="w-4 h-4 text-white" /> : <Copy className="w-4 h-4" />}
-                {copied ? 'Copied!' : 'Copy Text'}
-              </button>
-              <button onClick={handleClear} className="btn-ui btn-ui-danger">
-                <Trash2 className="w-4 h-4" /> Clear
-              </button>
-            </div>
-          </div>
+        {/* Primary Interactive Studio */}
+        <section>
+          <CounterStudio initialMode="all" />
         </section>
 
-        {/* Specialized Sub-tools Portal Section (Inspired by BSide Reference Portal) */}
-        <section className="space-y-6 pt-4">
+        {/* Specialized Platform Tools Grid */}
+        <section className="space-y-6">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div>
-              <h2>Platform-Specific Length & Formatting Tools</h2>
+              <h2 className="text-2xl font-extrabold text-slate-900">Platform-Specific Counter Utilities</h2>
               <p className="text-slate-500 text-xs mt-1 font-medium">Select a tool to test platform cutoff rules and live post previews:</p>
             </div>
 
-            {/* Filter Pills */}
+            {/* Filter Tabs */}
             <div className="flex items-center gap-2 flex-wrap">
               <span className="text-xs text-slate-400 font-bold flex items-center gap-1 mr-1">
                 <Filter className="w-3.5 h-3.5" /> Filter:
               </span>
-              <button 
-                onClick={() => setActiveCategory('all')}
-                className={`filter-tab ${activeCategory === 'all' ? 'filter-tab-active' : ''}`}
-              >
-                All Tools ({sceneTools.length})
-              </button>
-              <button 
-                onClick={() => setActiveCategory('social')}
-                className={`filter-tab ${activeCategory === 'social' ? 'filter-tab-active' : ''}`}
-              >
-                Social Media
-              </button>
-              <button 
-                onClick={() => setActiveCategory('seo')}
-                className={`filter-tab ${activeCategory === 'seo' ? 'filter-tab-active' : ''}`}
-              >
-                SEO & SERP
-              </button>
-              <button 
-                onClick={() => setActiveCategory('ecommerce')}
-                className={`filter-tab ${activeCategory === 'ecommerce' ? 'filter-tab-active' : ''}`}
-              >
-                E-Commerce
-              </button>
+              {[
+                { id: 'all', label: `All (${sceneTools.length})` },
+                { id: 'social', label: 'Social Media' },
+                { id: 'seo', label: 'SEO & SERP' },
+                { id: 'utility', label: 'Utilities' },
+              ].map(cat => (
+                <button 
+                  key={cat.id}
+                  onClick={() => setActiveCategory(cat.id)}
+                  className={`filter-tab ${activeCategory === cat.id ? 'filter-tab-active' : ''}`}
+                >
+                  {cat.label}
+                </button>
+              ))}
             </div>
           </div>
 
@@ -273,22 +165,25 @@ export default function HomePage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredTools.map((tool) => {
               const Icon = tool.icon;
+              const isExternal = tool.href.startsWith('http');
               return (
                 <Link 
                   key={tool.id} 
                   href={tool.href} 
-                  className="tool-tile group"
+                  target={isExternal ? '_blank' : undefined}
+                  rel={isExternal ? 'noopener noreferrer' : undefined}
+                  className="group bg-white border border-slate-200 rounded-3xl p-6 shadow-sm hover:shadow-xl hover:border-indigo-600 transition-all duration-300 flex flex-col justify-between"
                 >
                   <div className="space-y-4">
                     <div className="flex items-center justify-between">
-                      <div className="w-10 h-10 rounded-xl bg-indigo-50 border border-indigo-100 flex items-center justify-center text-indigo-600 group-hover:scale-105 transition-transform">
-                        <Icon className="w-5 h-5" />
+                      <div className="w-12 h-12 rounded-2xl bg-indigo-50 border border-indigo-100 flex items-center justify-center text-indigo-600 group-hover:bg-indigo-600 group-hover:text-white transition-all duration-300">
+                        <Icon className="w-6 h-6" />
                       </div>
-                      <span className="bg-slate-100 border border-slate-200 px-2.5 py-0.5 rounded-full text-[11px] font-bold text-slate-600">
+                      <span className="bg-slate-100 border border-slate-200/80 px-3 py-1 rounded-full text-xs font-extrabold text-slate-700">
                         {tool.badge}
                       </span>
                     </div>
-                    <h3 className="group-hover:text-indigo-600 transition-colors">
+                    <h3 className="text-lg font-bold text-slate-900 group-hover:text-indigo-600 transition-colors">
                       {tool.title}
                     </h3>
                     <p className="text-slate-500 text-xs leading-relaxed font-medium">
@@ -297,12 +192,29 @@ export default function HomePage() {
                   </div>
 
                   <div className="pt-4 mt-6 border-t border-slate-100 flex items-center justify-between text-xs font-bold text-indigo-600">
-                    <span>Open Inspector</span>
+                    <span>{isExternal ? 'Open Tool Site' : 'Launch Inspector'}</span>
                     <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                   </div>
                 </Link>
               );
             })}
+          </div>
+        </section>
+
+        {/* Minimal FAQ Section */}
+        <section className="bg-slate-50 border border-slate-200 rounded-3xl p-8 md:p-10 space-y-6">
+          <div className="space-y-2">
+            <h2 className="text-2xl font-extrabold text-slate-900">Frequently Asked Questions</h2>
+            <p className="text-xs text-slate-500 font-medium">Everything you need to know about text counting rules and privacy.</p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-2">
+            {faqs.map((faq, idx) => (
+              <div key={idx} className="bg-white border border-slate-200 rounded-2xl p-6 space-y-2 shadow-sm">
+                <h4 className="text-sm font-bold text-slate-900">{faq.q}</h4>
+                <p className="text-xs text-slate-500 leading-relaxed font-medium">{faq.a}</p>
+              </div>
+            ))}
           </div>
         </section>
       </div>
