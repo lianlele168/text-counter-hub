@@ -38,7 +38,7 @@ export default function LinkedInCounterPage() {
       <SchemaMarkup
         name="LinkedIn Post & Hook Cutoff Previewer"
         description="Free online LinkedIn post character counter (3,000 max limit) with real-time 210-character see-more cutoff preview."
-        url="https://countwise.app/linkedin-character-counter"
+        url="https://counter.robloxwikihub.com/linkedin-character-counter"
       />
 
       <div className="space-y-8">

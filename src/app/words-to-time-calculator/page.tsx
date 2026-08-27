@@ -46,7 +46,7 @@ export default function SpeechTimerPage() {
       <SchemaMarkup
         name="Speech & Reading Time Calculator (WPM)"
         description="Free online speech reading time converter. Calculate speaking time in minutes and seconds based on custom words per minute (WPM)."
-        url="https://countwise.app/words-to-time-calculator"
+        url="https://counter.robloxwikihub.com/words-to-time-calculator"
       />
 
       <div className="space-y-8">

@@ -64,7 +64,7 @@ export default function TwitterCounterPage() {
       <SchemaMarkup
         name="Twitter / X Thread Splitter & Character Counter"
         description="Free online Twitter thread generator. Automatically split long blog posts into 280-character numbered tweets (1/N)."
-        url="https://countwise.app/twitter-character-counter"
+        url="https://counter.robloxwikihub.com/twitter-character-counter"
       />
 
       <div className="space-y-8">

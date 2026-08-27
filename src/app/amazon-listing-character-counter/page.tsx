@@ -40,7 +40,7 @@ export default function AmazonCounterPage() {
       <SchemaMarkup
         name="Amazon Seller Listing Character Counter & Inspector"
         description="Free online Amazon product listing length tool. Verify title length limits (75 mobile / 200 max) and scan for prohibited promotional words."
-        url="https://countwise.app/amazon-listing-character-counter"
+        url="https://counter.robloxwikihub.com/amazon-listing-character-counter"
       />
 
       <div className="space-y-8">

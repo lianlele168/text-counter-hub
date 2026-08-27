@@ -38,7 +38,7 @@ export default function InstagramCounterPage() {
       <SchemaMarkup
         name="Instagram Caption & Hashtag Counter"
         description="Free online Instagram caption character counter (2,200 max) and hashtag counter (30 max) with first-line 125-character truncation preview."
-        url="https://countwise.app/instagram-character-counter"
+        url="https://counter.robloxwikihub.com/instagram-character-counter"
       />
 
       <div className="space-y-8">

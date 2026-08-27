@@ -4,7 +4,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://countwise.app'),
+  metadataBase: new URL('https://counter.robloxwikihub.com'),
   title: {
     default: 'CountWise - Free Online Character & Word Counter Suite',
     template: '%s | CountWise'
@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: 'https://countwise.app',
+    url: 'https://counter.robloxwikihub.com',
     title: 'CountWise - Character & Word Counter Suite',
     description: '100% client-side privacy-first text counter tool.',
     siteName: 'CountWise'

@@ -6,6 +6,6 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: '*',
       allow: '/',
     },
-    sitemap: 'https://countwise.app/sitemap.xml',
+    sitemap: 'https://counter.robloxwikihub.com/sitemap.xml',
   };
 }

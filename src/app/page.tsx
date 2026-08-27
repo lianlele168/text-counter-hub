@@ -132,7 +132,7 @@ export default function HomePage() {
       <SchemaMarkup 
         name="CountWise - Free Online Character & Word Counter Suite"
         description="Instant, private online character counter and word counter tool with platform-specific length previews."
-        url="https://countwise.app"
+        url="https://counter.robloxwikihub.com"
       />
 
       <div className="space-y-10">

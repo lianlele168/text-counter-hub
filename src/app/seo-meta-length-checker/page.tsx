@@ -8,7 +8,7 @@ import SchemaMarkup from '@/components/SchemaMarkup';
 export default function SeoMetaPage() {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [url, setUrl] = useState('https://countwise.app');
+  const [url, setUrl] = useState('https://counter.robloxwikihub.com');
   const [copied, setCopied] = useState(false);
 
   const titleLen = title.length;
@@ -27,7 +27,7 @@ export default function SeoMetaPage() {
   const loadSample = () => {
     setTitle('CountWise - Free Online Character & Word Counter Suite');
     setDescription('Instant, private online character counter and word counter tool. Measure characters, words, sentences, and reading time with real-time platform previews.');
-    setUrl('https://countwise.app');
+    setUrl('https://counter.robloxwikihub.com');
   };
 
   return (
@@ -35,7 +35,7 @@ export default function SeoMetaPage() {
       <SchemaMarkup
         name="Google SERP Snippet & Meta Tag Length Checker"
         description="Free online Google search preview simulator. Test title tag (60 char max) and meta description (160 char max) length optimization."
-        url="https://countwise.app/seo-meta-length-checker"
+        url="https://counter.robloxwikihub.com/seo-meta-length-checker"
       />
 
       <div className="space-y-8">
