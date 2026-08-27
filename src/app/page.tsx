@@ -16,15 +16,13 @@ export default function HomePage() {
   const charCount = text.length;
   const charNoSpaces = text.replace(/\s/g, '').length;
   
-  // Word count: handles both Chinese characters and English words accurately!
+  // Chinese & English mixed word counter
   const chineseChars = (text.match(/[\u4e00-\u9fa5]/g) || []).length;
   const englishWords = text.replace(/[\u4e00-\u9fa5]/g, ' ').trim() ? text.replace(/[\u4e00-\u9fa5]/g, ' ').trim().split(/\s+/).filter(Boolean).length : 0;
   const totalWordCount = chineseChars + englishWords;
   
   const sentenceCount = text.trim() ? (text.match(/[^.!?。！？]+[.!?。！？]+/g) || [text]).length : 0;
   const paragraphCount = text.trim() ? text.split(/\n+/).filter(Boolean).length : 0;
-  
-  // Reading & speaking time (assuming 250 chars/words per minute)
   const readingTimeMinutes = totalWordCount === 0 ? 0 : Math.max(1, Math.ceil(totalWordCount / 250));
 
   const handleCopy = () => {
@@ -128,14 +126,14 @@ export default function HomePage() {
           <h1>
             在线字数与字符统计工具箱
           </h1>
-          <p className="text-gray-300 text-sm md:text-base leading-relaxed">
+          <p className="text-[var(--text-secondary)] text-sm md:text-base leading-relaxed">
             在下方框中粘贴或输入文字，实时计算中英文字数、字符数、段落行数及阅读时间。
           </p>
         </section>
 
         {/* Primary Editor Container */}
         <section className="card-panel space-y-6">
-          {/* Top 5 High-Contrast Stat Cards */}
+          {/* Top 5 Stat Cards */}
           <div className="metrics-row">
             <div className="metric-box">
               <span className="metric-title">字符总数 (含空格)</span>
@@ -155,7 +153,7 @@ export default function HomePage() {
             </div>
             <div className="metric-box">
               <span className="metric-title">预估阅读时间</span>
-              <span className="metric-num">{readingTimeMinutes} <span className="text-xs text-gray-400 font-normal">分钟</span></span>
+              <span className="metric-num">{readingTimeMinutes} <span className="text-xs text-[var(--text-muted)] font-normal">分钟</span></span>
             </div>
           </div>
 
@@ -168,18 +166,18 @@ export default function HomePage() {
           />
 
           {/* Action Toolbar */}
-          <div className="flex flex-wrap items-center justify-between gap-4 pt-2 border-t border-[#30363D] text-xs">
+          <div className="flex flex-wrap items-center justify-between gap-4 pt-2 border-t border-[var(--border-main)] text-xs">
             {/* Secondary Breakdown */}
-            <div className="flex items-center gap-4 text-gray-400">
-              <span>句子数: <strong className="text-white">{sentenceCount}</strong></span>
-              <span>中文汉字: <strong className="text-white">{chineseChars}</strong></span>
-              <span>英文单词: <strong className="text-white">{englishWords}</strong></span>
+            <div className="flex items-center gap-4 text-[var(--text-secondary)]">
+              <span>句子数: <strong className="text-[var(--text-primary)]">{sentenceCount}</strong></span>
+              <span>中文汉字: <strong className="text-[var(--text-primary)]">{chineseChars}</strong></span>
+              <span>英文单词: <strong className="text-[var(--text-primary)]">{englishWords}</strong></span>
             </div>
 
             {/* Action Buttons */}
             <div className="flex items-center gap-2 flex-wrap">
               {/* Case Converters */}
-              <div className="flex items-center gap-1 bg-[#0D1117] p-1 rounded-lg border border-[#30363D]">
+              <div className="flex items-center gap-1 bg-[var(--bg-input)] p-1 rounded-lg border border-[var(--border-main)]">
                 <button onClick={() => applyCaseChange('upper')} className="btn text-[11px] py-1 px-2">全大写</button>
                 <button onClick={() => applyCaseChange('lower')} className="btn text-[11px] py-1 px-2">全小写</button>
                 <button onClick={() => applyCaseChange('title')} className="btn text-[11px] py-1 px-2">首字母大写</button>
@@ -202,7 +200,7 @@ export default function HomePage() {
         <section className="space-y-6 pt-4">
           <div>
             <h2>特定社交平台与 SEO 专用检测工具</h2>
-            <p className="text-gray-400 text-xs mt-1">针对特定平台长度限制与卡片预览设计的专用工具：</p>
+            <p className="text-[var(--text-secondary)] text-xs mt-1">针对特定平台长度限制与卡片预览设计的专用工具：</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
@@ -216,7 +214,7 @@ export default function HomePage() {
                 >
                   <div className="space-y-3">
                     <div className="flex items-center justify-between">
-                      <div className="w-9 h-9 rounded-lg bg-[#21262D] border border-[#30363D] flex items-center justify-center text-sky-400">
+                      <div className="w-9 h-9 rounded-lg bg-[var(--bg-input)] border border-[var(--border-main)] flex items-center justify-center text-sky-400">
                         <Icon className="w-4 h-4" />
                       </div>
                       <span className="pill-badge text-[10px]">{tool.badge}</span>
@@ -224,12 +222,12 @@ export default function HomePage() {
                     <h3 className="group-hover:text-sky-400 transition-colors">
                       {tool.title}
                     </h3>
-                    <p className="text-gray-400 text-xs leading-relaxed">
+                    <p className="text-[var(--text-secondary)] text-xs leading-relaxed">
                       {tool.desc}
                     </p>
                   </div>
 
-                  <div className="pt-4 mt-4 border-t border-[#30363D] flex items-center justify-between text-xs font-semibold text-sky-400">
+                  <div className="pt-4 mt-4 border-t border-[var(--border-main)] flex items-center justify-between text-xs font-semibold text-sky-400">
                     <span>打开此专用工具</span>
                     <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                   </div>
