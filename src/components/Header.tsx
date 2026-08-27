@@ -15,6 +15,7 @@ export default function Header() {
     { name: 'Instagram Caption & Hashtags', href: '/instagram-character-counter', icon: Instagram },
     { name: 'Amazon Seller Listing Inspector', href: '/amazon-listing-character-counter', icon: ShoppingBag },
     { name: 'Speech Reading Time Calculator', href: '/words-to-time-calculator', icon: Clock },
+    { name: 'Vector QR Code Studio', href: 'https://github.com/lianlele168/qr-code-hub.git', icon: Sparkles },
   ];
 
   return (
