@@ -5,5 +5,12 @@ export const metadata = {
 };
 
 export default function HomePage() {
-  return <HomeClient />;
+  return (
+    <>
+      <HomeClient />
+      <div className="px-4 pb-8 text-center text-[11px] text-slate-500">
+        Reviewed by Hlele · Content AI-assisted, human-reviewed · Data sources cited on page · Contact: lianlele168@gmail.com
+      </div>
+    </>
+  );
 }

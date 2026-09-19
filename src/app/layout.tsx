@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   },
   description: 'Instant, private online character counter and word counter tool. Measure characters, words, sentences, paragraphs, and reading time with live platform length previews.',
   keywords: ['character counter', 'word counter', 'online text counter', 'linkedin character count', 'twitter thread splitter', 'seo meta length checker'],
-  authors: [{ name: 'CountWise Suite' }],
+  authors: [{ name: 'Hlele' }],
   robots: {
     index: true,
     follow: true,

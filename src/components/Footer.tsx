@@ -58,6 +58,7 @@ export default function Footer() {
 
         <div className="pt-6 border-t border-slate-200 flex flex-col sm:flex-row justify-between items-center text-xs text-slate-500 gap-4 font-medium">
           <p>© {new Date().getFullYear()} CountWise Suite. All rights reserved.</p>
+          <p className="w-full text-center sm:text-left text-[11px] text-slate-400">Reviewed by Hlele · Content AI-assisted, human-reviewed · Data sources cited on page · Contact: lianlele168@gmail.com</p>
           <div className="flex gap-4">
             <Link href="/" className="hover:text-slate-900">Home</Link>
             <Link href="/seo-meta-length-checker" className="hover:text-slate-900">SEO Checker</Link>
